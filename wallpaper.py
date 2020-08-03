@@ -37,7 +37,7 @@ resp = requests.get(url)
 data = resp.json()
 
 # Form image url from json
-img = "http://www.bing.com/" + data['images'][0]['url'].replace("1080", "1200")
+img = "http://www.bing.com/" + data['images'][0]['url']#.replace("1080", "1200")
 
 # print(img)
 # Disp.Image(requests.get(img).content)
@@ -59,7 +59,7 @@ urllib.request.urlretrieve(img, img_path)
 
 
 if sys == 'Darwin':
-    app('Finder').desktop_picture.set(mactypes.File(img_path))
+    system('osascript -e \'tell application "Finder" to set desktop picture to "'+img_path+'" as POSIX file\'')
 else:
     ctypes.windll.user32.SystemParametersInfoA(20, 0, img_path , 0)
 
@@ -68,6 +68,5 @@ else:
 
 
 if not run:
-    system('crontab 30 12 * * * wallpaper.py')
+    system('crontab -l | { cat; echo "0 */2 * * * cd ~/Downloads && ~/opt/miniconda3/bin/python wallpaper.py >> ~/Downloads/cron.log 2>&1"; } | crontab -')
     # print('Run python file, not notebook.')
-
