@@ -68,6 +68,6 @@ print('Set wallpaper')
 
 # automatically change wallpaper (mac/linux)
 if not run:
-    system('crontab -l | { cat; echo "0 */2 * * * cd '+folder+' && $(which python3) '+folder+'wallpaper.py >> cron.log 2>&1"; } | crontab -')
+    system('crontab -l | { cat; echo "0 */2 * * * cd '+folder+' && $(which python3) '+folder+'wallpaper.py"; } | crontab -')
     print('Scheduled cron job.')
 
