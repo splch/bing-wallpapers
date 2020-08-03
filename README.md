@@ -1,3 +1,3 @@
 # Daily Bing Wallpapers
 
-python wallpaper.py
+cd daily-paper && python wallpaper.py
