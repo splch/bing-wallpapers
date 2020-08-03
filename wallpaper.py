@@ -4,13 +4,13 @@
 # In[1]:
 
 
-from os import path, mkdir, system
+from os import system, getcwd, path
 import requests
 import urllib.request
-# import IPython.display as Disp
 
 from platform import system as sys
 sys = sys()
+print(sys)
 if sys == 'Darwin':
     from appscript import app, mactypes
 else:
@@ -20,10 +20,10 @@ else:
 # In[2]:
 
 
-# Save pictures to folder
-folder = path.expanduser("~") + "/Downloads/Bing/"
+# Get current directory
+folder = getcwd()+'/'
 
-# print(folder)
+print(folder)
 
 
 # In[3]:
@@ -37,36 +37,37 @@ resp = requests.get(url)
 data = resp.json()
 
 # Form image url from json
-img = "http://www.bing.com/" + data['images'][0]['url']#.replace("1080", "1200")
+img = "http://www.bing.com" + data['images'][0]['url']#.replace("1080", "1200")
 
-# print(img)
-# Disp.Image(requests.get(img).content)
+print(img)
 
 
 # In[4]:
 
 
 img_path = folder+'daily_wallpaper'+img[-11:-7]
-run = path.exists(folder)
-
-if not run:
-    mkdir(folder)
+run = path.exists(img_path) # check if first run
 
 urllib.request.urlretrieve(img, img_path)
+print('Downloaded wallpaper')
 
 
 # In[5]:
 
 
+# Set mac/win/linux wallpaper
 if sys == 'Darwin':
     system('osascript -e \'tell application "Finder" to set desktop picture to "'+img_path+'" as POSIX file\'')
 else:
     ctypes.windll.user32.SystemParametersInfoA(20, 0, img_path , 0)
+print('Set wallpaper')
 
 
 # In[6]:
 
 
+# automatically change wallpaper (mac/linux)
 if not run:
-    system('crontab -l | { cat; echo "0 */2 * * * cd ~/Downloads && ~/opt/miniconda3/bin/python wallpaper.py >> ~/Downloads/cron.log 2>&1"; } | crontab -')
-    # print('Run python file, not notebook.')
+    system('crontab -l | { cat; echo "0 */2 * * * cd '+folder+' && $(which python3) '+folder+'wallpaper.py >> cron.log 2>&1"; } | crontab -')
+    print('Scheduled cron job.')
+
