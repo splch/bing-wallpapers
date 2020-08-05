@@ -30,14 +30,14 @@ print(folder)
 
 
 # URL in json format with latest wallpaper
-url = "http://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=en-US"
+url = 'https://www.bing.com/HPImageArchive.aspx?format=js&n=1'
 
 # Get json output
 resp = requests.get(url)
 data = resp.json()
 
 # Form image url from json
-img = "http://www.bing.com" + data['images'][0]['url']#.replace("1080", "1200")
+img = 'https://www.bing.com' + data['images'][0]['url'].split('&')[0].replace('1080', '1200')
 
 print(img)
 
@@ -45,7 +45,7 @@ print(img)
 # In[4]:
 
 
-img_path = folder+'daily_wallpaper'+img[-11:-7]
+img_path = folder+'daily_wallpaper'+img[-4:]
 run = path.exists(img_path) # check if first run
 
 urllib.request.urlretrieve(img, img_path)
