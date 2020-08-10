@@ -3,11 +3,11 @@
 
 1. `pip install requests`
 
-For macOS
-2. `pip install appscript`
+2. For macOS
+`pip install appscript`
 
-For Windows
-2. `pip install pypiwin32`
+2. For Windows
+`pip install pypiwin32`
 
 
 3. `python wallpaper.py`
