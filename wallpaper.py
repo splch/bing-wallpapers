@@ -14,7 +14,9 @@ print(sys)
 if sys == 'Darwin':
     from appscript import app, mactypes
 else:
-    import ctypes
+    import win32api
+    import win32gui
+    import win32con
 
 
 # In[2]:
@@ -43,7 +45,7 @@ img = 'https://www.bing.com' + data['images'][0]['url'].replace('1080', '1200')
 print(img)
 
 
-# In[11]:
+# In[4]:
 
 
 img_path = folder+'daily_wallpaper'+img[-11:-7]
@@ -63,7 +65,11 @@ print('Downloaded wallpaper')
 if sys == 'Darwin':
     system('osascript -e \'tell application "Finder" to set desktop picture to "'+img_path+'" as POSIX file\'')
 else:
-    ctypes.windll.user32.SystemParametersInfoA(20, 0, img_path , 0)
+    key = win32api.RegOpenKeyEx(win32con.HKEY_CURRENT_USER,"Control Panel\\Desktop",0,win32con.KEY_SET_VALUE)
+    win32api.RegSetValueEx(key, "WallpaperStyle", 0, win32con.REG_SZ, "0")
+    win32api.RegSetValueEx(key, "TileWallpaper", 0, win32con.REG_SZ, "0")
+    win32gui.SystemParametersInfo(win32con.SPI_SETDESKWALLPAPER, img_path.replace('\\', '/'), 1+2)
+    
 print('Set wallpaper')
 
 

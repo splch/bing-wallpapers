@@ -1,3 +1,13 @@
 # Daily Bing Wallpapers
 
-`cd daily-paper && python wallpaper.py`
+
+1. `pip install requests`
+
+For macOS
+2. `pip install appscript`
+
+For Windows
+2. `pip install pypiwin32`
+
+
+3. `python wallpaper.py`
