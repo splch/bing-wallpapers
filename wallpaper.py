@@ -40,7 +40,7 @@ data = resp.json()
 
 # Form image url from json
 
-img = 'https://www.bing.com' + data['images'][0]['url'].replace('1080', '1200')
+img = 'https://www.bing.com' + data['images'][0]['url']
 
 print(img)
 
@@ -52,9 +52,9 @@ img_path = folder+'daily_wallpaper'+img[-11:-7]
 run = path.exists(img_path) # check if first run
 
 try:
-    urllib.request.urlretrieve(img, img_path)
+    urllib.request.urlretrieve(img.replace('1080', '1200'), img_path)
 except:
-    urllib.request.urlretrieve(img.replace('1200', '1080'), img_path)
+    urllib.request.urlretrieve(img, img_path)
 print('Downloaded wallpaper')
 
 
