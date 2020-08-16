@@ -8,15 +8,15 @@ from os import system, getcwd, path
 import requests
 import urllib.request
 
-from platform import system as sys
-sys = sys()
+from platform import system
+sys = system()
 print(sys)
-if sys == 'Darwin':
-    from appscript import app, mactypes
-else:
+
+if sys == 'Windows':
     import win32api
     import win32gui
     import win32con
+
 
 
 # In[2]:
@@ -64,20 +64,25 @@ print('Downloaded wallpaper')
 # Set mac/win/linux wallpaper
 if sys == 'Darwin':
     system('osascript -e \'tell application "Finder" to set desktop picture to "'+img_path+'" as POSIX file\'')
-else:
+elif sys == 'Linux':
+    system('gsettings set org.gnome.desktop.background picture-uri '+img_path)
+elif sys == 'Windows':
     key = win32api.RegOpenKeyEx(win32con.HKEY_CURRENT_USER, "Control Panel/Desktop", 0, win32con.KEY_SET_VALUE)
     win32api.RegSetValueEx(key, "WallpaperStyle", 0, win32con.REG_SZ, "0")
     win32api.RegSetValueEx(key, "TileWallpaper", 0, win32con.REG_SZ, "0")
     win32gui.SystemParametersInfo(win32con.SPI_SETDESKWALLPAPER, img_path.replace('\\', '/'), 1+2)
-    
+
 print('Set wallpaper')
 
 
 # In[6]:
 
 
-# automatically change wallpaper (mac/linux)
+# automatically change wallpaper
 if not run:
-    system('crontab -l | { cat; echo "0 */2 * * * cd '+folder+' && $(which python3) '+folder+'wallpaper.py"; } | crontab -')
-    print('Scheduled cron job.')
+    if sys == 'Darwin' or sys == 'Linux':
+        system('crontab -l | { cat; echo "0 */2 * * * cd '+folder+' && $(which python3) '+folder+'wallpaper.py"; } | crontab -')
+    elif sys == 'Windows':
+        system('schtasks /create /sc hourly /mo 2 /tn "Daily Paper" /tr python3.exe '+folder+'wallpaper.py')
+    print('Scheduled Daily Paper.')
 
