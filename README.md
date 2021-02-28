@@ -8,4 +8,4 @@
 `pip install pypiwin32`
 
 
-3. `python wallpaper.py`
+3. `python3 wallpaper.py`

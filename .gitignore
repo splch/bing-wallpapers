@@ -1,3 +1,5 @@
 .DS_Store
 daily_wallpaper.jpg
 .ipynb_checkpoints/wallpaper-checkpoint.ipynb
+.vscode
+.git*
