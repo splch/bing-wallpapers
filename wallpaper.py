@@ -57,7 +57,7 @@ print('Set wallpaper')
 # automatically change wallpaper
 if not run:
     if sys == 'Darwin' or sys == 'Linux':
-        system('crontab -l | { cat; echo "0 */2 * * * cd '+folder+' && $(which python3) '+folder+'wallpaper.py > output.log 2>&1"; } | crontab -')
+        system('crontab -l | { cat; echo "0 */2 * * * cd '+folder+' && $(which python3) '+folder+'wallpaper.py > misc/output.log 2>&1"; } | crontab -')
     elif sys == 'Windows':
         system('schtasks /create /sc hourly /mo 2 /tn "Daily Paper" /tr python3.exe '+folder+'wallpaper.py')
 

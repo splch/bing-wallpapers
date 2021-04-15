@@ -13,4 +13,4 @@
 ---
 
 ## macOS Big Sur
-![Enable Full Disk Access for cron](https://github.com/splch/daily-paper/blob/master/full%20access%20cron.png?raw=true)
+![Enable Full Disk Access for cron](https://github.com/splch/daily-paper/blob/master/misc/full%20access%20cron.png?raw=true)
